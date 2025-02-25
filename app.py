@@ -6,13 +6,12 @@ import os
 app = Flask(__name__)
 
 # Environment Variables for Email Configuration
-EMAIL_SENDER = os.getenv("EMAIL_SENDER")  # Sender's email (e.g., keira.jarvis@hotmail.co.uk)
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")  # App password for the sender
-EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")  # Receiver's email (likely same as sender)
+EMAIL_SENDER = os.getenv("EMAIL_SENDER")  # Sender's email (e.g., casestudy19877@gmail.com)
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")  # App password for the sender (if 2FA is enabled)
+EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")  # Receiver's email (e.g., keira.jarvis@hotmail.co.uk)
 
-SMTP_SERVER = "smtp-mail.outlook.com"  # Correct SMTP for Outlook
+SMTP_SERVER = "smtp.gmail.com"  # Correct SMTP for Gmail
 SMTP_PORT = 587  # Use 587 for TLS
-
 
 def send_email(user_email):
     """Function to send an email when a form is submitted."""
@@ -29,10 +28,10 @@ def send_email(user_email):
     msg.set_content(f"A new case study has been submitted by {user_email}.")
 
     try:
-        # Connect to Outlook SMTP Server
+        # Connect to Gmail SMTP Server
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as smtp:
             smtp.starttls()  # Secure the connection
-            smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)  # Login with Gmail credentials
             smtp.send_message(msg)
         print("✅ Email Sent Successfully!")
 
